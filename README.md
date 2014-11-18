@@ -1,7 +1,7 @@
 #### dout
 =====
 
-attempt to directly send emails, instead of deploying a smtp server.  
+attempt to directly send emails, instead of deploying an smtp server.  
 download:
 ```
 go get -u github.com/dtynn/dout

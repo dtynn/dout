@@ -6,10 +6,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/dtynn/dout/cache/memory"
 	"github.com/dtynn/dout/mx"
 	"github.com/dtynn/dout/smtp"
-	"github.com/dtynn/dout/storage"
-	"github.com/dtynn/dout/storage/memory"
 )
 
 var (
@@ -18,26 +17,11 @@ var (
 
 var cacheExpire int64 = 60 * 10
 
-type logger interface {
-	Debug(v ...interface{})
-	Debugf(format string, v ...interface{})
-	Info(v ...interface{})
-	Infof(format string, v ...interface{})
-	Warn(v ...interface{})
-	Warnf(format string, v ...interface{})
-	Error(v ...interface{})
-	Errorf(format string, v ...interface{})
-	Fatal(v ...interface{})
-	Fatalf(format string, v ...interface{})
-	Panic(v ...interface{})
-	Panicf(format string, v ...interface{})
-}
-
 type D struct {
-	l        logger
+	l        Logger
 	hostname string
 	from     string
-	cache    storage.Storage
+	cache    Cache
 }
 
 type sendConfig struct {
@@ -48,7 +32,7 @@ type sendConfig struct {
 	tlsCfg *tls.Config
 }
 
-func New(hostname, from string, l logger, cache storage.Storage) (*D, error) {
+func New(hostname, from string, l Logger, cache Cache) (*D, error) {
 	if pieces := strings.Split(from, "@"); len(pieces) != 2 {
 		return nil, errInvalidEmail
 	}
@@ -61,7 +45,7 @@ func New(hostname, from string, l logger, cache storage.Storage) (*D, error) {
 	}, nil
 }
 
-func NewWithMemory(hostname, from string, l logger) (*D, error) {
+func NewWithMemory(hostname, from string, l Logger) (*D, error) {
 	cache := memory.New()
 	return New(hostname, from, l, cache)
 }

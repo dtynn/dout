@@ -1,9 +1,9 @@
 package memory
 
 import (
-	"errors"
-
 	"time"
+
+	"github.com/dtynn/dout/cache"
 )
 
 const (
@@ -15,8 +15,6 @@ const (
 
 var nonDead int64 = -1
 var nonData = &data{}
-
-var ErrNotFound = errors.New("value not found")
 
 type action struct {
 	action int
@@ -89,12 +87,12 @@ func (this *safeMap) Get(key interface{}) (interface{}, error) {
 	d := <-ch
 
 	if isNonData(d) {
-		return nil, ErrNotFound
+		return nil, cache.CacheNotFound
 	}
 
 	now := time.Now().Unix()
 	if d.dead != nonDead && d.dead < now {
-		return nil, ErrNotFound
+		return nil, cache.CacheNotFound
 	}
 
 	return d.val, nil

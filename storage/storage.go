@@ -1,5 +1,6 @@
 package storage
 
-type IStorage interface {
-	SaveEmail
+type Storage interface {
+	SaveMail()
+	UpdateProcess()
 }

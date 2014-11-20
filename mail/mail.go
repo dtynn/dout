@@ -2,6 +2,7 @@ package mail
 
 import (
 	"bytes"
+	"fmt"
 )
 
 var lineSep = "\r\n"
@@ -22,9 +23,9 @@ func NewMail(from string, tos []string, body string) *Mail {
 
 func (this *Mail) Bytes() []byte {
 	var w mailWriter
-	w.writeLine(this.From)
+	w.writeLine(fmt.Sprintf("From: %s", this.From))
 	for _, to := range this.Tos {
-		w.writeLine(to)
+		w.writeLine(fmt.Sprintf("To: %s", to))
 	}
 	w.writeLine("MIME-Version: 1.0")
 	w.writeLine("Content-Type: text/html; charset=UTF-8")

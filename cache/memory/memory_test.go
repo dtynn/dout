@@ -1,9 +1,10 @@
 package memory
 
 import (
+	"testing"
 	"time"
 
-	"testing"
+	"github.com/dtynn/dout/cache"
 )
 
 func TestSetAndGet(t *testing.T) {
@@ -34,7 +35,7 @@ func TestSetexAndGet(t *testing.T) {
 
 	time.Sleep(time.Duration(expire+1) * time.Second)
 	v, err := m.Get(key)
-	if err != ErrNotFound {
+	if err != cache.CacheNotFound {
 		t.Errorf("get %s which was expected to be expired", v)
 	}
 }
@@ -56,7 +57,7 @@ func TestDelAndGet(t *testing.T) {
 
 	m.Del(key)
 	v, err = m.Get(key)
-	if err != ErrNotFound {
+	if err != cache.CacheNotFound {
 		t.Errorf("get %s which was expected to be expired", v)
 	}
 }

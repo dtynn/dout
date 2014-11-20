@@ -10,14 +10,14 @@ const (
 )
 
 type Status struct {
-	Num    statusNum
-	Email  string
-	Detail string
+	ErrNo  statusNum `json:"error"`
+	Email  string    `json:"email"`
+	Detail string    `json:"detail"`
 }
 
 func NewStatus(num statusNum, email, detail string) *Status {
 	return &Status{
-		Num:    num,
+		ErrNo:  num,
 		Email:  email,
 		Detail: detail,
 	}

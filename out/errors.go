@@ -14,3 +14,7 @@ var (
 	noRecipients = fmt.Errorf("no recipients")
 	someFailed   = fmt.Errorf("some failed")
 )
+
+func SomeFailed(err error) bool {
+	return err == someFailed
+}

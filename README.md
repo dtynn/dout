@@ -31,7 +31,7 @@
     Method: POST
     Content-Type: application/x-www-form-urlencoded;charset=utf-8
     Request Body:
-        from=noreply@mydomain.com&to=a@example1.com,b@example2.com&body=mail_content
+        from=noreply@mydomain.com&to=a@example1.com,b@example2.com&subject=title&body=mail_content
     ```
     请求参数:  
     
@@ -39,11 +39,12 @@
     :--- | :------ | :--- | :---
     from | string  | 是   | 发送人地址
     to   | string  | 是   | 收件人地址, 多个收件地址以`,`分隔; 虽然接口允许多个收件人, 但由于会同步发送, 因此不建议这么做. 
+    subject | string  | 否   | 邮件标题
     body | string  | 否   | 邮件正文, 不提供则会发送一封空白的邮件...
     
     使用 curl 的范例:
     ```
-    curl -X POST -d "from=noreply@mydomain.com&to=a@example1.com,b@example2.com&body=test" http://127.0.0.1:10025/send
+    curl -X POST -d "from=noreply@mydomain.com&to=a@example1.com,b@example2.com&subject=title&body=test" http://127.0.0.1:10025/send
     ```
     
     响应格式:

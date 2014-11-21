@@ -42,9 +42,10 @@ func (this *server) send(w http.ResponseWriter, r *http.Request) {
 	}
 	tos := strings.Split(toStr, ",")
 
+	subject := r.PostFormValue("subject")
 	body := r.PostFormValue("body")
 
-	m := mail.NewMail(from, tos, body)
+	m := mail.NewMail(from, subject, tos, body)
 	failed, err := this.d.Send(m)
 
 	data := resp{}
